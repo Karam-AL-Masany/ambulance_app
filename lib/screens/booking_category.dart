@@ -31,16 +31,6 @@ class _BookingCategoryState extends State<BookingCategory> with Crud {
   }
 
 
-  getBookingsPending() async{
-    var response = await postRequest(linkBookingsPending,
-        {
-
-        }
-    ) ;
-
-    return response ;
-  }
-
   String countPending = "0" ;
 
   Future<void> _updateCountPending() async {
@@ -247,7 +237,7 @@ class _BookingCategoryState extends State<BookingCategory> with Crud {
                     Expanded(
                       child: MaterialButton(
                         onPressed: () {
-                          Navigator.of(context).pushNamed("selectLocation");
+                          Navigator.of(context).pushNamed("OperationCase");
                         },
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
@@ -313,34 +303,6 @@ class _BookingCategoryState extends State<BookingCategory> with Crud {
                 ),
 
 
-                FutureBuilder(
-                    future: getBookingsPending(),
-                    builder: (BuildContext context,AsyncSnapshot snapshot){
-                      if(snapshot.hasData){
-                        if(snapshot.data['status'] == 'failed')
-                          return Center(
-                              child: Text("There is not cases",
-                                style: TextStyle(fontSize: 22,),
-                              ));
-                        return ListView.builder(
-                            itemCount: snapshot.data['data'].length,
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemBuilder: (context , i){
-                              return
-                                Text("${countPending = snapshot.data['data'][i]['active'].toString()}",
-                                );
-
-                            });
-                      }
-                      if(snapshot.connectionState == ConnectionState.waiting){
-                        return Center(child:Text("loading...")) ;
-                      }
-                      return Center(child: Text("connecting...")) ;
-                    }
-                ),
-
-
                 Positioned(
                   top: -20,
                   left: 100,
@@ -367,125 +329,3 @@ class _BookingCategoryState extends State<BookingCategory> with Crud {
     );
   }
 }
-
-
-
-
-// Stack(
-// clipBehavior: Clip.none,
-// children: [
-// Row(
-// children: [
-// Expanded(
-// child: MaterialButton(
-// onPressed: () {
-// Navigator.of(context).pushNamed("selectLocation");
-// },
-// shape: RoundedRectangleBorder(
-// borderRadius: BorderRadius.circular(10)),
-// height: 45,
-// minWidth: 150,
-// child: Row(
-// children: [
-// Icon(
-// Icons.note_add_rounded,
-// color: Colors.white,
-// ),
-// SizedBox(
-// width: 2,
-// ),
-// Expanded(
-// child: Text(
-// "MY RECORD",
-// style: TextStyle(
-// color: Colors.white,
-// fontSize: 15,
-// fontWeight: FontWeight.bold),
-// ),
-// ),
-// ],
-// ),
-// color: Colors.red,
-// ),
-// ),
-// SizedBox(
-// width: 10,
-// ),
-// Expanded(
-// child: MaterialButton(
-// onPressed: () {
-// Navigator.of(context).pushNamed("profile");
-// },
-// shape: RoundedRectangleBorder(
-// borderRadius: BorderRadius.circular(10)),
-// height: 45,
-// minWidth: 150,
-// child: Row(
-// children: [
-// Icon(
-// Icons.person,
-// color: Colors.white,
-// ),
-// SizedBox(
-// width: 2,
-// ),
-// Text(
-// "PROFILE",
-// style: TextStyle(
-// color: Colors.white,
-// fontSize: 15,
-// fontWeight: FontWeight.bold),
-// ),
-// ],
-// ),
-// color: Colors.red,
-// ),
-// ),
-// ],
-// ),
-//
-//
-// FutureBuilder(
-// future: getBookingsPending(),
-// builder: (BuildContext context,AsyncSnapshot snapshot){
-// if(snapshot.hasData){
-// if(snapshot.data['status'] == 'failed')
-// return Center(
-// child: Text("There is not cases",
-// style: TextStyle(fontSize: 22,),
-// ));
-// return ListView.builder(
-// itemCount: snapshot.data['data'].length,
-// shrinkWrap: true,
-// physics: NeverScrollableScrollPhysics(),
-// itemBuilder: (context , i){
-// return
-// Positioned(
-// top: -20,
-// left: 110,
-// child: CircleAvatar(
-// radius: 15,
-// backgroundColor: Colors.green,
-// child: Text(
-// "${snapshot.data['data'][i]['active']}",
-// style: TextStyle(fontSize: 20, color: Colors.white),
-// ),
-// ),
-// );
-// });
-// }
-// if(snapshot.connectionState == ConnectionState.waiting){
-// return Center(child:Text("loading...")) ;
-// }
-// return Center(child: Text("connecting...")) ;
-// }
-// ),
-//
-//
-//
-//
-//
-//
-//
-// ],
-// ),
