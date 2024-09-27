@@ -7,14 +7,12 @@ $type = @$_POST['type'];
 $quantity = @$_POST['quantity'];
 $count = @$_POST['count'];
 $userId = @$_POST['userId'];
+$date = @$_POST['date'];
 $bookingCase = @$_POST['bookingCase'];
 $bookingActive = @$_POST['bookingActive'];
 $img = uploadImage("cnicImg");
 
-
-
-
-if($img != "fail"){
+ if($img != "fail"){
   $max = mysqli_query($con,"select id from bookings");
   for($i = 1 ; $row = mysqli_fetch_array($max)  ; $i++){
        $lastId = $i + 1  ;
@@ -23,7 +21,8 @@ if($img != "fail"){
   $lastId .= "";
 
 
-  $stmt = "INSERT into `bookings` (`id`, `type` ,`quantity`,`count`,`userId` , `img` , `bookingCase` , `bookingActive`) values ('$lastId', '$type' ,'$quantity','$count','$userId','$img','$bookingCase' , '$bookingActive') ; ";
+  $stmt = "INSERT into `bookings` (`id`,`type`,`quantity`,`count`,`img`,`date`,`userId`,`bookingCase`,`bookingActive`) values 
+                              ('$lastId','$type','$quantity','$count','$img','$date','$userId','$bookingCase','$bookingActive'); ";
   $response = array();
   
     if(!empty($type) && !empty($userId)){   
